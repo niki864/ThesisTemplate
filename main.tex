@@ -1,5 +1,116 @@
-\documentclass{article}
+% HOW TO USE THIS TEMPLATE 
+% Read this before you start work on formating your thesis using Latex.
+% Latex is the easiest way to format a thesis according to the NITT Guidelines. Latex takes care off tables, figures, chapters, sections and subsections and basically everything you need to keep track off. It will auto populate entries into the table of contents which is pretty useful and time-saving.
+% This template was prepared assuming zero prior knowledge of Latex.
+% THIS TEMPLATE WAS MADE FOR USE BY BTECH STUDENTS AND FOLLOWS THE THESIS GUIDELINES FOR BTECH STUDENTS
+% Wherever possible, I have included examples and notes on how to modify the document to suit your needs. If your new to Latex, I would recommend not diverging from the instructions as you may end up with buggy sections. 
+%
+% I'll be using the notation where my comments explaining usage will be followed by a section of the code where you will find{BLOCK LETTERS}.
+% This indicates that you have to modify only what's inside the curly braces. 
+
+
+
+
+\documentclass[a4paper,12pt,oneside]{book}
 \usepackage[utf8]{inputenc}
+\usepackage{amssymb} 
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{color}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=9pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[export]{adjustbox}
+\graphicspath{ {images/} }
+\usepackage{times}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{tocloft}
+\usepackage{tabu}
+\usepackage{fancyhdr}
+\geometry{a4paper, tmargin=1in, rmargin=1in, bmargin=1in, lmargin=1.5in}
+\usepackage{titlesec}
+\usepackage[toc,page]{appendix}
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\centering}
+  {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+  
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % for chapters
+\renewcommand\contentsname{\centerline{TABLE OF CONTENTS}}
+\pagestyle{fancy}
+\cfoot{\thepage}
+\rhead{}
+\lhead{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
 \begin{document}
-(Type your content here.)
+% Change the title below to your own title E.g. \title{MYPROJECTNAME}
+\title{B.Tech Thesis Template}
+\frontmatter
+\addtocontents{toc}{\textbf{Title}\hfill\textbf{Page No.}\par}
+\input{titlepage}
+\input{bonafide}
+\addcontentsline{toc}{chapter}{ABSTRACT}
+\input{abstract}
+\addcontentsline{toc}{chapter}{ACKNOWLEDGEMENT}
+\input{acknowledgement}
+\addcontentsline{toc}{chapter}{TABLE OF CONTENTS}
+\tableofcontents
+\newpage
+\addcontentsline{toc}{chapter}{LIST OF TABLES}
+\listoftables
+\newpage
+\addcontentsline{toc}{chapter}{LIST OF FIGURES}
+\listoffigures
+ 
+\mainmatter
+% Create chapters by first adding a new .tex file with your chapter name. E.g. <ChapterFileName>.tex
+% Insert your chapters here in the format specified below
+% \chapter{ChapterName}
+% \input{ChapterFileName}
+% This will ensure that your chapter will be added to the table of contents
+\chapter{Introduction}
+\input{Chapter1}
+\chapter{Review Of Literature}
+\input{Chapter2}
+
+
+\newpage
+% The bibliography goes under a separate .bib file. To quote articles, just fill the appropriate headings in the bibliography file. 
+\addcontentsline{toc}{chapter}{References}
+\bibliographystyle{unsrt}
+\bibliography{reference}
+
+\begin{appendices}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+% Appendix chapters go here. Note that appendix will not show sections or subsections as the main chapters above in the table of contents. Also chapter numbering will be alphabetic e.g. (A,B,C etc) The example on the appendix also shows how to add programming code to a thesis.
+  \chapter{Code Attachments}
+  \input{appendix}
+\end{appendices}
+
+
+
 \end{document}

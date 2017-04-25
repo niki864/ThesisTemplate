@@ -1,0 +1,46 @@
+\section{Lorem Ipsum}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum 
+
+% The following example is for writing Code in a Latex Environment
+% The listings package is used to make code appear in an ordered and indented manner. Note that every code section begins with a \begin{lstlisting}[Language=Python]. Change language to the programming language of your choice and the syntax highlighting will change accordingly
+\begin{lstlisting}[language=Python]
+def get_parameters(data, chunk_size=410):
+	#Store the activity label to add later
+	activity = data['Activity']
+    '''
+    Define a dictionary of functions. Sets of readings will be aggregated as per these functions
+    '''
+	func_dict = {
+		'min': np.min,
+		'max': np.max,
+		'diff': lambda x: np.max(x) - np.min(x),
+		'std': np.std,
+		'iqr': stats.iqr,
+		'rms': lambda x: np.sqrt(np.mean(np.square(x))),
+		'mad': lambda x: x.mad(),
+		'mediad': mediad
+	}
+	aggregations = {
+		'X': func_dict,
+		'Y': func_dict,
+		'Z': func_dict
+	}
+	data_groups = []
+    '''
+    Transform the dataset into rolling windows of 410 readings each and store them in a Pandas data group.
+    '''
+	for i in range(int(data.shape[0]/(chunk_size/2)) - 1):
+		temp = data.iloc[int(i*(chunk_size/2)):int((i+2)*(chunk_size/2))]
+		temp['k'] = i
+		data_groups.append(temp)
+	data_groups = pd.concat(data_groups).groupby('k', as_index=False)
+    #Run the aggregations on all data groups
+	stats_data = data_groups.agg(aggregations)
+	stats_data.columns = [''.join(col).strip() for col in stats_data.columns.values]
+	activity = activity.reset_index(drop=True)
+    #Add activity label
+	stats_data = pd.concat([stats_data, activity[:len(stats_data)]], axis=1)
+	del stats_data['k']
+	return stats_data
+\end{lstlisting}
+
